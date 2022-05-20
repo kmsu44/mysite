@@ -10,6 +10,6 @@ def index(request):
 
 
 def detail(request, Post_id):
-    post = Post.objects.get(id=Post_id)
-    context = {'Post': Post}
+    post = get_object_or_404(Post, pk=Post_id)
+    context = {'post': post}
     return render(request, 'pybo/productInfo.html', context)
