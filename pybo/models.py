@@ -1,24 +1,26 @@
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
-# user객체 확장
-# class User():
-#     FirstName = models.CharField()
-#     phone_number = models.CharField(max_length=11)
-#     address = models.CharField()
+from django.contrib.auth.models import User
 
-# 상품 모델
-class Post(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    create_date = models.DateTimeField()
-    category = models.CharField(max_length=200)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE,null=False)
-    price = models.IntegerField()
-    image = models.ImageField(upload_to = 'images',blank=True,null=True)
-    def __str__(self):
-        return self.title
+# 카테고리
 class Category(models.Model):
     sort = models.CharField(max_length = 255)
     def __str__(self):
         return self.sort
+    
+# 상품 모델
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+    Modify_date = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=False)
+    price = models.IntegerField()
+    dicount_price = models.IntegerField()
+    image = models.ImageField(upload_to = 'images',blank=True,null=True)
+    recruit_num = models.IntegerField()
+    participants = models.IntegerField()
+    def __str__(self):
+        return self.title
+
 

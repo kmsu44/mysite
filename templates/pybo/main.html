@@ -22,7 +22,7 @@
         <div id="sharebox">
             <a href="/" id="share"><b>LET'S<br>START</a></b>
         </div>
-        <h1><a href="/" id="pagename">SHARESHARE</a></h1>
+        <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
 
         <nav>
             <a href="joined.html" id="share">CART</a>
@@ -79,16 +79,16 @@
             <div class = "contents_bottom">
                 <div class="book_name">
                     <div>{{Post.title}}</div>
-                    <div><img  onclick="change()" src="img/heart.png" alt="heart" id="img1"></div>
+                    <div><img  onclick="change()" src="{% static 'images/heart.png' %}" alt="heart" id="{{Post.id}}"></div>
                 </div>
 
                 <div class="prog">
-                    <progress value="80" max="100"></progress>
+                    <progress value={{Post.participants}} max={{Post.recruit_num}}></progress>
                 </div>
 
                 <div class="price">
-                    <div class="personbox"><img src="img/person.png" alt="person" class="person"> <p style="margin: 0;">8/10</p></div>
-                    <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}  </del>  {{Post.price}}</span>
+                    <div class="personbox"><img src="{% static 'images/person.png' %}" alt="person" class="person"> <p style="margin: 0;">{{Post.participants}}/{{Post.recruit_num}}</p></div>
+                    <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}  </del>  {{Post.dicount_price}}</span>
                 </div>
 
             </div>
@@ -96,7 +96,7 @@
                 let flag = true;
 
                 function change(){
-                    document.getElementById("img1").src = flag ? "img/heartred.png" : "img/heart.png";
+                    document.getElementById("{{Post.id}}").src = flag ? "{% static 'images/heartred.png' %}" : "{% static 'images/heart.png' %}";
                     flag = !flag;
                 }
                 </script>
@@ -124,7 +124,7 @@
 
     <div id="finish">
         <footer class="footer">
-            <h1><a href="/" id="pagename">SHARESHARE</a></h1>
+            <h1><a href="/pybo" id="pagename">SHARESHARE</a></h1>
             <div>
             This is Team TAG's Project!!<br>
             최락원, 김민수, 이은서, 변승진, 이은지, 유종혁

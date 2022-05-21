@@ -156,17 +156,13 @@ header {
     font-size: 25px;
     font-weight: 500;
 }
-.personKakao {
-    background-image: url("/img/Kakao_logo.jpeg");
+.person {
+    background-image: url("{% static 'images/Kakao_logo.jpeg' %}");
     max-width: 60px;
     max-height: 40px;
     padding: 5px;
     border-radius: 10px;
     margin: auto;
-}
-.personKakao a {
-    text-decoration: none;
-    color: white;
 }
 #personImg {
     margin-left: 5px;
@@ -174,7 +170,7 @@ header {
     width: 70%;
     height: 70%;
     align-items: center;
-    
+
 }
 progress {
     height: 70px;
