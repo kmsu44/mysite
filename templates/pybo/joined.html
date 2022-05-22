@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="myPage.css">
+    <link rel="stylesheet" href="joined.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'joined-style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="sideNav">
+        <header>My Page</header>
+        <img src="{% static 'images/user.png' %}" alt="" id="userImg">
+        <ul>
+            <li><a href="/pybo/" id="pagename">Home</a></li>
+            <li><a href="joined.html"><b>Joined Group</b></a></li>
+            <li><a href="created.html">Created Group</a></li>
+            <li><a href="editInfo.html">Edit Information</a></li>
+            {% if user.is_authenticated %}
+            <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li
+            {% else %}
+            {% endif %}
+        </ul>
+    </div>
+    <div class="contents">
+        <div id="joinedGroup">
+            <h2 style="margin-left: 10px;">Joined Group</h2>
+
+            <div id="box">
+
+                 {% if Post_list %}
+                    {% for Post in Post_list %}
+                        {% if Post.user == user %}
+                        <article class="book">
+                            <a href="/pybo/{{ Post.id }}/"><img src="" alt="book" class="bookImage"></a>
+                            <div class = "contents_bottom">
+                                <div class="bookName">
+                                    <div>{{Post.title}}</div>
+                                </div>
+
+                                <progress value={{Post.participants}} max={{Post.recruit_num}}></progress>
+
+                            <div class="bookPrice">
+                                <div class="bookPersonnel"><p style="margin: 0;">목표 인원: {{Post.recruit_num}} / 담은 인원 : {{Post.participants}} </p></div>
+                                    <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}</del>{{Post.dicount_price}}</span>
+                            </div>
+
+                            </div>
+
+                        </article>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>상품이 없습니다....</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
