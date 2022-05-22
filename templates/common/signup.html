@@ -43,11 +43,11 @@
             <input type="text" placeholder="Please enter your ID" class="form-control" name="username" id="username"
             value="{{ form.username.value|default_if_none:'' }}">
             <br>
-            <label for="firstname"><b>First Name</b></label> <br>
-            <input type="text" placeholder="Please enter your Frist Name" class="form-control" name="frist_name" id="frist_name"
-            value="{{ form.first_name.value|default_if_none:'' }}">
+            <label for="first_name"><b>First Name</b></label> <br>
+            <input type="text" placeholder="Please enter your Frist Name" class="form-control" name="first_name" id="first_name"
+            value="{{form.first_name.value|default_if_none:''}}">
             <br>
-            <label for="lastname"><b>lastname</b></label> <br>
+            <label for="last_name"><b>lastname</b></label> <br>
             <input type="text" placeholder="Please enter your ID" class="form-control" name="last_name" id="last_name"
             value="{{ form.last_name.value|default_if_none:'' }}">
             <br>

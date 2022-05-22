@@ -14,5 +14,5 @@ urlpatterns = [
 ]
 
 
-# 방법 1.
+# 이미지업로드관련
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
