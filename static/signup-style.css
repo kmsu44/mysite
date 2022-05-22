@@ -96,22 +96,17 @@ header nav a:hover{
   width:50%;
 }
 
-#myid,
-#myname,
-#mymail,
-#password1,
-#password2,
-#address {
+
+#contents input[type="text"]{
   height: 40px;
   width: 100%;
-  text-align: left;
   margin-top: 10px;
   margin-bottom: 15px;
+  text-align: left;
   border:none;
   border-bottom:2px solid black;
 }
-
-#contents input[type="tel"] {
+#contents input[type="password"]{
   height: 40px;
   width: 100%;
   margin-top: 10px;
@@ -119,6 +114,15 @@ header nav a:hover{
   text-align: left;
   border:none;
   border-bottom:2px solid black;
+}
+input[type="checkbox"] {
+  background-color: initial;
+  cursor: default;
+  appearance: auto;
+  box-sizing: border-box;
+  margin: 3px 3px 3px 4px;
+  padding: initial;
+  border: initial;
 }
 
 #contents input[type="btn btn-primary"] {
