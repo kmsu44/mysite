@@ -20,7 +20,7 @@
 
     <header>
         <div id="sharebox">
-            <a href="/" id="share"><b>LET'S<br>START</a></b>
+            <a href="{%url 'pybo:create' %}" id="share"><b>LET'S<br>START</b></a>
         </div>
         <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
 
@@ -75,7 +75,7 @@
             {% for Post in Post_list %}
 
         <article>
-                 <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" alt="book"></a>
+                 <a href="/pybo/{{ Post.id }}/"><img src="" alt="book"></a>
             <div class = "contents_bottom">
                 <div class="book_name">
                     <div>{{Post.title}}</div>
