@@ -274,13 +274,12 @@ progress{
   }
 
 
-
-
 .pagenumberblock{
     margin-top: 10px;
     text-align: center;
     margin-bottom: 10px;
 }
+
 .pagenumberblock a{
     color:gray;
     font-size: 20px;
@@ -290,7 +289,6 @@ progress{
 .pagenumberblock b{
     color:black;
 }
-
 
 footer{
     position:relative;
@@ -321,6 +319,10 @@ footer{
 .pages {
     list-style: none;
     padding: 50px;
+    display:flex;
+    width:30%;
+    margin:auto;
+    justify-content: center;
 }
 
 .pages a{
@@ -328,7 +330,11 @@ footer{
 }
 
 .pages li {
-    float: left;
-    margin-left: 20px;
+    text-align:center;
+    margin-left: 10px;
 }
 
+li{
+    text-align:center;
+    width:50px;
+}

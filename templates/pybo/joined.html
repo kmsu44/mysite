@@ -25,8 +25,8 @@
         <img src="{% static 'images/user.png' %}" alt="" id="userImg">
         <ul>
             <li><a href="/pybo/" id="pagename">Home</a></li>
-            <li><a href="joined.html"><b>Joined Group</b></a></li>
-            <li><a href="created.html">Created Group</a></li>
+            <li><a href="joined.html">Joined Group</a></li>
+            <li><a href="created.html"><b>Created Group</b></a></li>
             <li><a href="editInfo.html">Edit Information</a></li>
             {% if user.is_authenticated %}
             <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li
@@ -36,7 +36,7 @@
     </div>
     <div class="contents">
         <div id="joinedGroup">
-            <h2 style="margin-left: 10px;">Joined Group</h2>
+            <h2 style="margin-left: 10px;">Created Group</h2>
 
             <div id="box">
 

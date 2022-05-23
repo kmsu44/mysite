@@ -99,6 +99,12 @@ header {
     background-color: rgb(200, 200, 200);
 }
 
+.errorlist{
+    width:29%;
+    margin:auto;
+
+}
+
 footer{
     position:relative;
     width:90%;

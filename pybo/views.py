@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 def index(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.order_by('-create_date')
-    paginator = Paginator(Post_list, 4)
+    paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
     return render(request, 'pybo/main.html', context)
