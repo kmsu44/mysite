@@ -3,9 +3,14 @@ from django.utils import timezone
 from .models import Post
 from .models import Category
 
+from django.core.paginator import Paginator
+
 def index(request):
+    page = request.GET.get('page', '1')
     Post_list = Post.objects.order_by('-create_date')
-    context = {'Post_list': Post_list}
+    paginator = Paginator(Post_list, 4)
+    page_obj = paginator.get_page(page)
+    context = {'Post_list': page_obj}
     return render(request, 'pybo/main.html', context)
 
 

@@ -110,13 +110,61 @@
 
     </div>
 </div>
-    <div class="pagenumberblock">
-        <a href=""> <b>1</b> </a>
-        <a href=""> 2 </a>
-        <a href=""> 3 </a>
-        <a href=""> 4 </a>
 
-    </div>
+{% comment %} <div class="pagenumberblock">
+    <a href=""> <b>1</b> </a>
+    <a href=""> 2 </a>
+    <a href=""> 3 </a>
+    <a href=""> 4 </a>
+
+</div> {% endcomment %}
+
+
+
+{% comment %} 페이징처리 시작 {% endcomment %}
+<ul class="pages" style="list-style: none;">
+    {% comment %} 이전페이지 {% endcomment %}
+    {% if Post_list.has_previous %}
+    <li class="pages-li">
+        <a href="?page={{ Post_list.previous_page_number }}">Prev</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="#" tabindex="-1" aria-disabled="true" style="color: grey;">Prev</a>
+    </li>
+    {% endif %}
+
+
+    {% comment %} 페이지 리스트 {% endcomment %}
+    {% for page_number in Post_list.paginator.page_range %}
+    {% if page_number == question_list.number %}
+        <li class="pages-li">
+            <a class="page-item" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="?page={{ page_number }}" tabindex="-1">{{ page_number }}</a>
+        </li>
+    {% endif %}
+    {% endfor %}
+
+
+    {% comment %} 다음페이지 {% endcomment %}
+    {% if Post_list.has_next %}
+        <li class="page-li">
+            <a href="?page={{ Post_list.next_page_number }}">Next</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="#" tabindex="-1" aria-disabled="true" style="color: grey;">Next</a>
+        </li>
+    {% endif %}
+</ul>
+{% comment %} 페이징처리 끝 {% endcomment %}
+
+
+
+
 
 
 

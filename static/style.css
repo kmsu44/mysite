@@ -318,3 +318,17 @@ footer{
     margin-bottom:-7px;
   }
 
+.pages {
+    list-style: none;
+    padding: 50px;
+}
+
+.pages a{
+    text-decoration: none;
+}
+
+.pages li {
+    float: left;
+    margin-left: 20px;
+}
+
