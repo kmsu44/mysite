@@ -19,16 +19,16 @@
 <body>
 
     <header>
+        {% if user.is_authenticated %}
         <div id="sharebox">
             <a href="{%url 'pybo:create' %}" id="share"><b>LET'S<br>START</b></a>
         </div>
+        {% endif %}
         <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
 
         <nav>
             {% if user.is_authenticated %}
             <a href="{%url 'pybo:joined' %}" id="joined">cart</a>
-            {% else %}
-            <a href="{%url 'common:login' %}" id="joined">cart</a>
             {% endif %}
             
 
