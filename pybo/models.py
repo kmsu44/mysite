@@ -17,7 +17,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=False)
     price = models.IntegerField()
     dicount_price = models.IntegerField()
-    image = models.ImageField(upload_to = 'images',blank=True,null=True)
+    image = models.ImageField(upload_to = 'images', default='default.jpg', blank=True, null=True)
     recruit_num = models.IntegerField()
     participants = models.IntegerField()
     def __str__(self):
