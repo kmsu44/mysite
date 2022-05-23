@@ -21,12 +21,14 @@
 <body>
 
     <header>
-        <div id="sharebox"><a href="group.html" id="share"><b>LET'S<br>START</b></a></div>
+        <div id="sharebox">
+            <a href="{%url 'pybo:create' %}" id="share"><b>LET'S<br>START</b></a>
+        </div>
         <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
 
         <nav>
         <nav>
-            <a href="{%url 'pybo:joined' %}" id="joined">cart</a>
+            <a href="joined.html" id="share">CART</a>
             <a href="login.html"><img src="img/user.png" alt="searchimg" id="login"></a>
         </nav>
 
@@ -41,40 +43,17 @@
 <!--    정보-->
 
     <div id="made">
-        <div class="container" style="height:550px;">
-            <div class="image-upload" id="image-upload">
-
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="button">
-                        <label for="chooseFile">
-                            Image Upload
-                        </label>
-                    </div>
-                    <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-                </form>
-
-                <div class="fileContainer">
-                    <div class="fileInput">
-                        <p>FILE NAME: </p>
-                        <p id="fileName"></p>
-                    </div>
-                    <div class="buttonContainer">
-                        <div class="submitButton" id="submitButton">SUBMIT</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="image-show" id="image-show"></div>
-            <script src="imageupload.js"></script>
-        </div>
 
         <div id="info">
-            <form action="{% url 'pybo:create' %}" method="post">
+
+            <form action="{% url 'pybo:create' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="bookname"><b>Name of the item</b></label><br>
                 <input type="text" name="title" id="bookname" placeholder="Please enter the Name of the item">
-
+                <br>
+                <br>
+                <input name="image" class="image" type="file">
+                <br>
                 <br>
 
                 <label for="author"><b>Category</b></label> <br>

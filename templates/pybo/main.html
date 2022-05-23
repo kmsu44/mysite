@@ -25,7 +25,12 @@
         <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
 
         <nav>
+            {% if user.is_authenticated %}
             <a href="{%url 'pybo:joined' %}" id="joined">cart</a>
+            {% else %}
+            <a href="{%url 'common:login' %}" id="joined">cart</a>
+            {% endif %}
+            
 
             {% if user.is_authenticated %}
             <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }}(로그아웃)</a>
@@ -74,34 +79,39 @@
         {% if Post_list %}
             {% for Post in Post_list %}
 
-        <article>
-                 <a href="/pybo/{{ Post.id }}/"><img src="" alt="book"></a>
-            <div class = "contents_bottom">
-                <div class="book_name">
-                    <div>{{Post.title}}</div>
-                    <div><img  onclick="change()" src="{% static 'images/heart.png' %}" alt="heart" id="{{Post.id}}"></div>
+            <article>
+                {% if Post.image %}
+                <a href=""><img src="{{Post.image.url}}" alt="book"></a>
+                {% else %}
+                <a href=""><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                {% endif %}
+                <div class = "contents_bottom">
+    
+                    <div class="book_name">
+                        <div>{{Post.title}}</div>
+                        <div><img  onclick="change()" src="{% static 'images/heart.png' %}" alt="heart" id="{{Post.id}}"></div>
+                    </div>
+    
+                    <div class="prog">
+                        <progress value={{Post.participants}} max={{Post.recruit_num}}></progress>
+                    </div>
+    
+                    <div class="price">
+                        <div class="personbox"><img src="{% static 'images/person.png' %}" alt="person" class="person"> <p style="margin: 0;">{{Post.participants}}/{{Post.recruit_num}}</p></div>
+                        <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}  </del>  {{Post.dicount_price}}</span>
+                    </div>
+    
                 </div>
-
-                <div class="prog">
-                    <progress value={{Post.participants}} max={{Post.recruit_num}}></progress>
-                </div>
-
-                <div class="price">
-                    <div class="personbox"><img src="{% static 'images/person.png' %}" alt="person" class="person"> <p style="margin: 0;">{{Post.participants}}/{{Post.recruit_num}}</p></div>
-                    <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}  </del>  {{Post.dicount_price}}</span>
-                </div>
-
-            </div>
-                <script>
-                let flag = true;
-
-                function change(){
-                    document.getElementById("{{Post.id}}").src = flag ? "{% static 'images/heartred.png' %}" : "{% static 'images/heart.png' %}";
-                    flag = !flag;
-                }
-                </script>
-
-        </article>
+                    <script>
+                    let flag = true;
+    
+                    function change(){
+                        document.getElementById("{{Post.id}}").src = flag ? "{% static 'images/heartred.png' %}" : "{% static 'images/heart.png' %}";
+                        flag = !flag;
+                    }
+                    </script>
+    
+            </article>
             {% endfor %}
         {% else %}
             <p>상품이 없습니다....</p>

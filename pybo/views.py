@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
 from .models import Category
-
+from django.contrib.auth import views as auth_views
 from django.core.paginator import Paginator
 
 def index(request):
@@ -19,10 +19,6 @@ def detail(request, Post_id):
     context = {'post': post}
     return render(request, 'pybo/productInfo.html', context)
 
-# def create(request):
-#     return render(request,'pybo/group.html')
-
-
 def create(request):
     if request.method == "POST":
 
@@ -34,7 +30,9 @@ def create(request):
                     recruit_num=request.POST.get('recruit_num'),
                     category=Category.objects.get(sort=request.POST.get('category')),
                     dicount_price=request.POST.get('dicount_price'),
-                    content=request.POST.get('content'))
+                    content=request.POST.get('content'),
+                    image=request.FILES.get('image'))
+
 
         post.save()
         return redirect('pybo:index')
