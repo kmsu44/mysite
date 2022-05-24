@@ -44,6 +44,8 @@ def joined(request):
     if request.user.is_authenticated:
         Post_list = Post.objects.order_by('-create_date')
         context = {'Post_list': Post_list}
+        global flag
+        flag = 0
         return render(request, 'pybo/joined.html', context)
     else:
         return render(request, 'common/login.html')

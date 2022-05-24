@@ -7,10 +7,13 @@
     height: 600px;
     overflow: auto;
 }
+
 .contents{
     padding-top: 30px;
     position: relative;
     left: 50px;
+    height:500px;
+    width:1100px;
 }
 
 .bookmodify{
@@ -68,14 +71,26 @@
     margin: 10px 0;
 }
 .book {
+    background-color: #f3eded;
     border: 3px solid black; /* Test */
     border-radius: 9px;
     padding: 70px;
-    margin: 10px;
+    margin: 2px;
     margin-right: 30px;
     display: grid;
     grid-template-columns: 200px 1fr;
+    position: relative;
+    z-index:2;
 }
+
+#error{
+    position:fixed;
+    top:200px;
+    left:730px;
+    z-index:0;
+}
+
+
 .bookDescription {
     padding: 10px 0px 0px 30px;
     /* border: 1px solid black; */ /* Test */
@@ -83,10 +98,11 @@
     /* overflow: hidden; */
 }
 .bookImage {
-    width: 200px;
+    width: 150px;
     float: left;
     /* overflow: auto; */
     flex-wrap:wrap;
+
 }
 .bookName {
     font-size: 30px;
@@ -150,3 +166,4 @@ progress {
     top: 20%;
     left: 35%;
 }
+

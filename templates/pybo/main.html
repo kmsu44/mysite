@@ -81,9 +81,9 @@
 
             <article>
                 {% if Post.image %}
-                <a href=""><img src="{{Post.image.url}}" alt="book"></a>
+                <a href="/pybo/{{ Post.id }}"><img src="{{Post.image.url}}" alt="book"></a>
                 {% else %}
-                <a href=""><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                <a href="/pybo/{{ Post.id }}"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
                 {% endif %}
                 <div class = "contents_bottom">
     

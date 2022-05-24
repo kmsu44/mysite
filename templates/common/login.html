@@ -58,7 +58,10 @@
             <button id="loginButton" type ="submit" class = "btn btn-primary">LOG IN</button>
             <br>
             <div style="margin: 5px;"></div>
-            
+            {% if form.non_field_errors %}
+                <span style="max-width:30%; margin:auto; color:red; text-align:left;">아래 버튼을 눌러 회원가입을 먼저 진행해주세요.</span>
+            {% endif %}
+            <br>
             <a href="{% url 'common:signup' %}" style="text-decoration: none; color: darkslategrey; margin-top: 100px;">Don't have an account?</a>
 
             </div>

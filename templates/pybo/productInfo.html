@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'productInfo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'productInfo.css' %}?after">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,8 +59,8 @@
             </div>
             <div class="person">
                 <div class="personName">{{post.user.username}} / {{post.user.last_name}}{{post.user.first_name}}</div>
-                <div class="personKakao"><a href="/"><img src = "{% static 'images/Kakao_logo.jpeg' %}" alt="" class = personKakao ></a></div>
-                <div class="personPicture"><img src= "{% static 'images/person.png' %}" alt="" id="personImg"></div>
+                <img src = "{% static 'images/Kakao_logo.jpeg' %}" alt="" class = "personKakao" >
+                <img src= "{% static 'images/person.png' %}" alt="" class="personKakao">
             </div>
             <div class="productProgress">
                 <progress value={{post.participants}} max={{post.recruit_num}}></progress>
