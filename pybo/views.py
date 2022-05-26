@@ -15,7 +15,7 @@ from django.views.decorators.http import require_POST
 
 def index(request):
     page = request.GET.get('page', '1')
-    Post_list = Post.objects.filter(category=2)
+    Post_list = Post.objects.order_by('-create_date')
 
     # 정렬
     sort = request.GET.get('sort', '')
@@ -32,6 +32,7 @@ def index(request):
     # 검색
 
     kw = request.GET.get('kw', '')  # 검색어
+
     if kw:
         Post_list = Post_list.filter(
             Q(title__icontains=kw)
@@ -127,6 +128,24 @@ def Clothes(request):
     context = {'Post_list': page_obj}
     return render(request, 'pybo/Clothes.html', context)
 # def join(request, post_id):
+
+def Book(request):
+    page = request.GET.get('page', '1')
+    Post_list = Post.objects.filter(category=2)
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post_list.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post_list.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post_list.order_by('dicount_price')
+    else:
+        Post_list = Post_list.order_by('-create_date')
+    paginator = Paginator(Post_list, 8)
+    page_obj = paginator.get_page(page)
+    context = {'Post_list': page_obj}
+    return render(request, 'pybo/Book.html', context)
+
 
 def joined(request):
     if request.user.is_authenticated:

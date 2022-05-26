@@ -42,11 +42,11 @@
     </header>
 
         <div id="category">
-            <a href="{%url 'pybo:Food' %}" id="Food"><b>Food</b></a>
-            <a href="{%url 'pybo:Book' %}">Book</a>
+            <a href="{%url 'pybo:Food' %}" id="Food">Food</a>
+            <a href="{%url 'pybo:Book' %}"><b>Book</b></a>
             <a href="{%url 'pybo:Stationery' %}" id="Stationery">Stationery</a>
             <a href="{%url 'pybo:Clothes' %}" id="Clothes">Clothes</a>
-            <a href="{%url 'pybo:Etc' %}" id="Etc">Etc</a>
+            <a href="{%url 'pybo:Etc' %}" id="Etc"><b>Etc</b></a>
         </div>
 
 <div id="contentbox">
@@ -112,7 +112,6 @@
                     </div>
 
                 </div>
-
             </article>
             {% endfor %}
         {% else %}
@@ -173,8 +172,6 @@
     {% endif %}
 </ul>
 {% comment %} 페이징처리 끝 {% endcomment %}
-
-
 <form id="searchForm" method="get" action="{% url 'pybo:index' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
@@ -235,11 +232,6 @@ $(document).ready(function(){
 
 </script>
 {% endblock %}
-
-
-
-
-
 
     <div id="finish">
         <footer class="footer">

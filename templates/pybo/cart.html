@@ -26,7 +26,7 @@
         <ul>
             <li><a href="/pybo/" id="pagename">Home</a></li>
             <li><a href="{%url 'pybo:joined' %}" id="joined">Joined Group</a></li>
-            <li><a href="created.html"><b>Created Group</b></a></li>
+            <li><a href="pyobo:created"><b>Created Group</b></a></li>
             <li><a href="{% url 'common:editinfo' %}">Edit Information</a></li>
             {% if user.is_authenticated %}
             <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li>
