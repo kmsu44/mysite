@@ -39,10 +39,10 @@
         <div class="leftMargin"></div>
         <div class="left">
             <div class="productImg">
-                {% if Post.image %}
-                <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" alt="book"></a>
+                {% if post.image %}
+                <img src="{{post.image.url}}" alt="image">
                 {% else %}
-                <a href="/pybo/{{ Post.id }}/"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                <img src="{% static 'images/default.jpg' %}" alt="image">
                 {% endif %}
                 
                 <button><img src="/img/see.png" alt=""></button>

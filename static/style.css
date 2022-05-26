@@ -90,7 +90,6 @@ header {
       color:gray;
       text-decoration: none;
       margin:auto;
-      font-weight: bold;
       text-align:center;
       font-size:15px;
   }
@@ -297,9 +296,9 @@ progress{
 }
 
 footer{
-    position:relative;
+    position: absoloute; 
+    bottom:0;
     width:90%;
-    margin:auto;
     display:flex;
   }
   

@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
@@ -13,24 +14,23 @@ from django.views.decorators.http import require_POST
 
 
 def index(request):
-    
-    
+    page = request.GET.get('page', '1')
+    Post_list = Post.objects.filter(category=2)
+
     # 정렬
-    sort = request.GET.get('sort','')
+    sort = request.GET.get('sort', '')
     if sort == 'like':
-        Post_list = Post.objects.order_by('-like_num')
+        Post_list = Post_list.order_by('-like_num')
     elif sort == 'Top_price':
-        Post_list = Post.objects.order_by('-dicount_price')
+        Post_list = Post_list.order_by('-dicount_price')
     elif sort == 'Low_price':
-        Post_list = Post.objects.order_by('dicount_price')
-    elif sort == 'recent':
-        Post_list = Post.objects.order_by('create_date')
+        Post_list = Post_list.order_by('dicount_price')
     else:
-        Post_list = Post.objects.order_by('-create_date')
+        Post_list = Post_list.order_by('-create_date')
         
         
     # 검색
-    page = request.GET.get('page', '1')
+
     kw = request.GET.get('kw', '')  # 검색어
     if kw:
         Post_list = Post_list.filter(
@@ -108,7 +108,7 @@ def Etc(request):
     paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
-    return render(request, 'pybo/Food.html', context)
+    return render(request, 'pybo/Etc.html', context)
 
 def Clothes(request):
     page = request.GET.get('page', '1')
@@ -142,24 +142,9 @@ def detail(request, Post_id):
     return render(request, 'pybo/productInfo.html', context)
 
 
-def create(request):
-    if request.method == "POST":
 
-        post=Post(  user=request.user,
-                    # category=request.POST.get('category'),
-                    title=request.POST.get('title'),
-                    price=request.POST.get('price'),
-                    participants=0,
-                    recruit_num=request.POST.get('recruit_num'),
-                    category=Category.objects.get(sort=request.POST.get('category')),
-                    dicount_price=request.POST.get('dicount_price'),
-                    content=request.POST.get('content'),
-                    image=request.FILES.get('image'))
-        post.save()
-        return redirect('pybo:index')
-    else:
-        return render(request, 'pybo/group.html')
-
+    
+    
 
 def join(request, Post_id):
     if request.user.is_authenticated:
@@ -193,3 +178,23 @@ def Delete(request, Post_id):
     post = get_object_or_404(Post, pk = Post_id)
     post.delete()
     return redirect('pybo:cart')
+
+
+def create(request):
+    if request.method == "POST":
+
+        post=Post(  user=request.user,
+                    # category=request.POST.get('category'),
+                    title=request.POST.get('title'),
+                    price=request.POST.get('price'),
+                    participants=0,
+                    recruit_num=request.POST.get('recruit_num'),
+                    category=Category.objects.get(sort=request.POST.get('category')),
+                    dicount_price=request.POST.get('dicount_price'),
+                    content=request.POST.get('content'),
+                    image=request.FILES.get('image'))
+        post.save()
+        return redirect('pybo:index')
+    else:
+        return render(request, 'pybo/group.html')
+    

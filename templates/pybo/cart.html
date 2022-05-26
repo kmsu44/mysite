@@ -27,10 +27,9 @@
             <li><a href="/pybo/" id="pagename">Home</a></li>
             <li><a href="{%url 'pybo:joined' %}" id="joined">Joined Group</a></li>
             <li><a href="created.html"><b>Created Group</b></a></li>
-            <li><a href="editInfo.html">Edit Information</a></li>
+            <li><a href="{% url 'common:editinfo' %}">Edit Information</a></li>
             {% if user.is_authenticated %}
-            <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li
-            {% else %}
+            <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li>
             {% endif %}     
         </ul>
     </div>
@@ -65,7 +64,7 @@
                                     <div>
                                         <form action = "" method="post">
                                             {%csrf_token %}
-                                            <button class="control_btn" value="modify">MODIFY</button>
+                                            <button class="control_btn" value="delete">Modify</button>
                                         </form>
                                     </div>
                                     <div>

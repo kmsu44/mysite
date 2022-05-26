@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'joined-style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="sideNav">
+        <header>My Page</header>
+        <img src="{% static 'images/user.png' %}" alt="" id="userImg">
+        <ul>
+            <li><a href="/pybo/" id="pagename">Home</a></li>
+            <li><a href="{% url 'pybo:joined' %}" id="joined">Joined Group</a></li>
+            <li><a href="created.html"><b>Created Group</b></a></li>
+            <li><a href="{% url 'common:editinfo' %}">Edit Information</a></li>
+            {% if user.is_authenticated %}
+            <li><a class="nav-link" href="{% url 'common:logout' %}">logout</a></li>
+            {% endif %}     
+        </ul>
+    </div>
+    <div class="contents">
+        <h1>Edit your information</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Edit</button>
+        </form>
+        <p>Click <a href="{% url 'common:editpw' %}">here</a> to edit your password.</p>
+        {% comment %} <div id="editInfo">
+            <form action="#" method="post" class="editInfo">
+                <p style="font-size: 60px; font-weight: 100; margin-top: 0;font-family: sans-serif;">Edit Your User Information</p>
+                
+                <input type="text" placeholder="ID">
+                <div style="height: 7px;"></div>
+                <input type="password" placeholder="Password">
+                <div style="height: 3px;"></div>
+                <input type="password" placeholder="Confirm Password">
+                <div style="height: 3px;"></div>
+                <input type="tel" placeholder="Phone Number">
+                <div style="height:3px"></div>
+                <input type="text" placeholder="Address">
+                <div style="height:3px"></div>
+                <input type="submit" value="UPDATE">        
+                
+                <div style="margin-top: 10px;"></div>
+                </div>
+            </form>
+        </div> {% endcomment %}
+    </div>
+</body>
+</html>
