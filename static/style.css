@@ -278,6 +278,7 @@ progress{
 .like{
     background-color:transparent;
     border: 0px;
+    padding: 0px;
 }
 .pagenumberblock{
     margin-top: 10px;

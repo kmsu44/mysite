@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <title>main-page</title>
 </head>
 
@@ -54,17 +57,22 @@
         <div style="width:100%">
             <div class="search-bar" >
                 <i class="fas fa-search"></i>
-                <input class="search-bar__input" type="search" id="search_kw" value="{{ kw|default_if_none:'' }}" placeholder="search" />
+                {% comment %} 버튼 엔터키  {% endcomment %}
+                <input class="search-bar__input" type="search" id="search_kw" value="{{ kw|default_if_none:'' }}" onkeypress="return search(event)" placeholder="search" />
+                {% comment %} 버튼 클릭 {% endcomment %}
                 <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
              </div>
         </div>
-
-        <select name="filter" id="filter">
-            <option value="recent">recent</option>
-            <option value="expensive">Top price</option>
-            <option value="cheap">Low price</option>
-            <option value="deadline">due date</option>
-        </select>
+        {% comment %} <form id="form" method="get" action=""> {% endcomment %}
+            <select name="sort" id="sort" onchange="location = this.value;">
+                <option class="sort-recent" value ="?sort=recent">recent</option>
+                <option class = 'sort-like' value="?sort=like">like</option>
+                <option class = 'sort-Top_price' value="?sort=Top_price">Top price</option>
+                <option class = 'sort-Low_price' value="?sort=Low_price">Low price</option>
+            </select>
+        {% comment %} </form>   {% endcomment %}
+        
+    </form>
     </div>
     <div id="contents">
         {% if Post_list %}
@@ -88,14 +96,14 @@
                         <form action = "{% url 'pybo:like' Post.id %}" method="post">
                         {%csrf_token %}
                         <button class="like" value="like">
-                            <img  src="{% static 'images/heartred.png' %}" alt="heart">
+                            <img  src="{% static 'images/heartred.png' %}" alt="heart">{{Post.like_num}}
                         </button>
                         </form>
                         {% else %}
                         <form action = "{% url 'pybo:like' Post.id %}" method="post">
                             {%csrf_token %}
                         <button class="like" value="unlike">
-                            <img  src="{% static 'images/heart.png' %}" alt="blank_heart">
+                            <img  src="{% static 'images/heart.png' %}" alt="blank_heart">{{Post.like_num}}
                         </button>
 
                         </form>
@@ -197,6 +205,47 @@ btn_search.addEventListener('click', function() {
     document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
     document.getElementById('searchForm').submit();
 });
+
+{% comment %} 버튼 엔터키 {% endcomment %}
+function search(e) {
+    if (e.keyCode == 13) {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+    }
+}
+
+//셀렉트 유지
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+$(document).ready(function(){
+  var sort = getUrlParameter('sort');
+  if(sort == 'like'){
+    $('.sort-like').prop('selected', 'selected')
+  }else if(sort == 'Top_price'){
+    $('.sort-Top_price').prop('selected', 'selected')
+  }else if(sort == 'Low_price'){
+    $('.sort-Low_price').prop('selected', 'selected')
+  }
+  else{
+    $('.sort-recent').prop('selected', 'selected')
+  }
+});
+
+
 </script>
 {% endblock %}
 

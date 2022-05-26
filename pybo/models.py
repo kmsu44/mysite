@@ -22,6 +22,7 @@ class Post(models.Model):
     participants = models.IntegerField()
     joined_users = models.ManyToManyField(User, related_name='joined_users', blank = True)
     like = models.ManyToManyField(User,related_name = 'liked_users')
+    like_num = models.IntegerField(default = 0)
     def __str__(self):
         return self.title
 

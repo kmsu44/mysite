@@ -13,9 +13,25 @@ from django.views.decorators.http import require_POST
 
 
 def index(request):
+    
+    
+    # 정렬
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post.objects.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post.objects.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post.objects.order_by('dicount_price')
+    elif sort == 'recent':
+        Post_list = Post.objects.order_by('create_date')
+    else:
+        Post_list = Post.objects.order_by('-create_date')
+        
+        
+    # 검색
     page = request.GET.get('page', '1')
     kw = request.GET.get('kw', '')  # 검색어
-    Post_list = Post.objects.order_by('-create_date')
     if kw:
         Post_list = Post_list.filter(
             Q(title__icontains=kw)
@@ -39,8 +55,23 @@ def cart(request):
 def Food(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.filter(category=1)
+    
+    # 정렬
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post_list.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post_list.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post_list.order_by('dicount_price')
+    else:
+        Post_list = Post_list.order_by('-create_date')
+    
+
     paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
+    
+    
     context = {'Post_list': page_obj}
     return render(request, 'pybo/Food.html', context)
 
@@ -48,6 +79,15 @@ def Food(request):
 def Stationery(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.filter(category=7)
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post_list.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post_list.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post_list.order_by('dicount_price')
+    else:
+        Post_list = Post_list.order_by('-create_date')
     paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
@@ -56,6 +96,15 @@ def Stationery(request):
 def Etc(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.filter(category=8)
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post_list.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post_list.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post_list.order_by('dicount_price')
+    else:
+        Post_list = Post_list.order_by('-create_date')
     paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
@@ -64,6 +113,15 @@ def Etc(request):
 def Clothes(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.filter(category=9)
+    sort = request.GET.get('sort','')
+    if sort == 'like':
+        Post_list = Post_list.order_by('-like_num')
+    elif sort == 'Top_price':
+        Post_list = Post_list.order_by('-dicount_price')
+    elif sort == 'Low_price':
+        Post_list = Post_list.order_by('dicount_price')
+    else:
+        Post_list = Post_list.order_by('-create_date')
     paginator = Paginator(Post_list, 8)
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
@@ -122,8 +180,13 @@ def like(request, Post_id):
         post = get_object_or_404(Post, pk = Post_id)
     if request.user in post.like.all():
         post.like.remove(request.user)
+        if post.like_num != 0:
+            post.like_num -=1
+            post.save()
     else:
         post.like.add(request.user)
+        post.like_num +=1
+        post.save()
     return redirect('pybo:index')
 
 def Delete(request, Post_id):
