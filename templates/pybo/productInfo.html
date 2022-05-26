@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'productInfo.css' %}?after">
+    <link rel="stylesheet" type="text/css" href="{% static 'productInfo.css'%}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
             {% if user.is_authenticated %}
             <a href="{%url 'pybo:cart' %}" id="joined">cart</a>
             {% endif %}
-            
+
 
             {% if user.is_authenticated %}
             <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }}(로그아웃)</a>
@@ -34,12 +34,17 @@
             {% endif %}
         </nav>
     </header>
-    
+
     <div class="gridContainer" style="margin-top: 200px; margin-bottom: 200px;">
         <div class="leftMargin"></div>
         <div class="left">
             <div class="productImg">
-                <img src="{{post.image.url}}" alt="">
+                {% if Post.image %}
+                <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" alt="book"></a>
+                {% else %}
+                <a href="/pybo/{{ Post.id }}/"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                {% endif %}
+                
                 <button><img src="/img/see.png" alt=""></button>
             </div>
             <div>
@@ -67,7 +72,18 @@
                 <div style="display: inline; font-size: 30px; align-items: center; font-weight: 500;">{{post.participants}} / {{post.recruit_num}}</div>
             </div>
             <div class="submitButtons">
-                <button class="joinButton">JOIN</button>
+                {% if user in post.joined_users.all %}
+                <form action = "{% url 'pybo:join' post.id %}" method="post">
+                    {%csrf_token %}
+                    <button class="joinButton" value="disjoin">Disjoin</button>
+                </form>
+                {% else %}
+                <form action = "{% url 'pybo:join' post.id %}" method="post">
+                    {%csrf_token %}
+                    <button class="joinButton" value="join">join</button>
+                </form>
+                {% endif %}
+
                 <div style="width: 100px;"></div>
                 <button class="shareButton">SHARE</button>
 

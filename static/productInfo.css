@@ -1,3 +1,4 @@
+
 *{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -156,21 +157,13 @@ header {
     font-size: 25px;
     font-weight: 500;
 }
-.person {
+.personKakao {
     background-image: url("{% static 'images/Kakao_logo.jpeg' %}");
     max-width: 60px;
     max-height: 40px;
     padding: 5px;
     border-radius: 10px;
     margin: auto;
-}
-#personImg {
-    margin-left: 5px;
-    margin-top: 5px;
-    width: 70%;
-    height: 70%;
-    align-items: center;
-
 }
 progress {
     height: 70px;

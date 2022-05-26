@@ -17,9 +17,11 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=False)
     price = models.IntegerField()
     dicount_price = models.IntegerField()
-    image = models.ImageField(upload_to = 'images', default='default.jpg', blank=True, null=True)
+    image = models.ImageField(upload_to = 'images', default='default.png', blank=True)
     recruit_num = models.IntegerField()
     participants = models.IntegerField()
+    joined_users = models.ManyToManyField(User, related_name='joined_users', blank = True)
+    like = models.ManyToManyField(User,related_name = 'liked_users')
     def __str__(self):
         return self.title
 

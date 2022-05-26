@@ -1,0 +1,178 @@
+
+{% load static %}
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}?after">
+<html lang="en">
+<head>
+    <meta chrarset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grape+Nuts&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+    <title>main-page</title>
+</head>
+
+<body>
+
+    <header>
+        {% if user.is_authenticated %}
+        <div id="sharebox">
+            <a href="{%url 'pybo:create' %}" id="share"><b>LET'S<br>START</b></a>
+        </div>
+        {% endif %}
+        <h1><a href="/pybo/" id="pagename">SHARESHARE</a></h1>
+
+        <nav>
+            {% if user.is_authenticated %}
+            <a href="{%url 'pybo:cart' %}" id="cart">cart</a>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }}(로그아웃)</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
+            {% endif %}
+        </nav>
+
+    </header>
+
+        <div id="category">
+            <a href="{%url 'pybo:Food' %}" id="Food">Food</a>
+            <a href="{%url 'pybo:index' %}">Book</a>
+            <a href="{%url 'pybo:Stationery' %}" id="Stationery">Stationery</a>
+            <a href="{%url 'pybo:Clothes' %}" id="Clothes">Clothes</a>
+            <a href="{%url 'pybo:Etc' %}" id="Etc">Etc</a>
+        </div>
+
+<div id="contentbox">
+    <div id="contenthead">
+        <div style="width:100%">
+            <div class="search-bar" >
+                <i class="fas fa-search"></i>
+                <input class="search-bar__input" type="search" id="search_kw" value="{{ kw|default_if_none:'' }}" placeholder="search" />
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+             </div>
+        </div>
+
+        <select name="filter" id="filter">
+            <option value="recent">recent</option>
+            <option value="expensive">Top price</option>
+            <option value="cheap">Low price</option>
+            <option value="deadline">due date</option>
+        </select>
+    </div>
+    <div id="contents">
+        {% if Post_list %}
+            {% for Post in Post_list %}
+
+            <article>
+                {% if Post.image %}
+                <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" alt="book"></a>
+                {% else %}
+                <a href="/pybo/{{ Post.id }}/"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                {% endif %}
+                <div class = "contents_bottom">
+
+                    <div class="book_name">
+                        <div>{{Post.title}}</div>
+                        <div><img  onclick="change()" src="{% static 'images/heart.png' %}" alt="heart" id="{{Post.id}}"></div>
+                    </div>
+
+                    <div class="prog">
+                        <progress value={{Post.participants}} max={{Post.recruit_num}}></progress>
+                    </div>
+
+                    <div class="price">
+                        <div class="personbox"><img src="{% static 'images/person.png' %}" alt="person" class="person"> <p style="margin: 0;">{{Post.participants}}/{{Post.recruit_num}}</p></div>
+                        <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}  </del>  {{Post.dicount_price}}</span>
+                    </div>
+
+                </div>
+
+            </article>
+            {% endfor %}
+        {% else %}
+            <p>상품이 없습니다....</p>
+        {% endif %}
+
+
+    </div>
+</div>
+
+{% comment %} <div class="pagenumberblock">
+    <a href=""> <b>1</b> </a>
+    <a href=""> 2 </a>
+    <a href=""> 3 </a>
+    <a href=""> 4 </a>
+
+</div> {% endcomment %}
+
+
+
+{% comment %} 페이징처리 시작 {% endcomment %}
+<ul class="pages" style="list-style: none;">
+    {% comment %} 이전페이지 {% endcomment %}
+    {% if Post_list.has_previous %}
+    <li class="pages-li">
+        <a href="?page={{ Post_list.previous_page_number }}">Prev</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="#" tabindex="-1" aria-disabled="true" style="color: grey;">Prev</a>
+    </li>
+    {% endif %}
+
+
+    {% comment %} 페이지 리스트 {% endcomment %}
+    {% for page_number in Post_list.paginator.page_range %}
+    {% if page_number == question_list.number %}
+        <li class="pages-li">
+            <a class="page-item" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="?page={{ page_number }}" tabindex="-1">{{ page_number }}</a>
+        </li>
+    {% endif %}
+    {% endfor %}
+
+
+    {% comment %} 다음페이지 {% endcomment %}
+    {% if Post_list.has_next %}
+        <li class="page-li">
+            <a href="?page={{ Post_list.next_page_number }}">Next</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="#" tabindex="-1" aria-disabled="true" style="color: grey;">Next</a>
+        </li>
+    {% endif %}
+</ul>
+{% comment %} 페이징처리 끝 {% endcomment %}
+
+
+
+
+
+
+
+
+
+    <div id="finish">
+        <footer class="footer">
+            <h1><a href="/pybo" id="pagename">SHARESHARE</a></h1>
+            <div>
+            This is Team TAG's Project!!<br>
+            최락원, 김민수, 이은서, 변승진, 이은지, 유종혁
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+
+</html>

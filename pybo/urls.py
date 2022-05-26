@@ -8,5 +8,19 @@ urlpatterns = [
     
     path('create/', views.create, name="create"),
     path('cart/', views.cart, name="cart"),
+    path('joined/', views.joined, name="joined"),
+    path('join/<int:Post_id>/', views.join, name="join"),
+    path('like/<int:Post_id>/', views.like, name="like"),
+    
+    
+    path('Delete/<int:Post_id>/', views.Delete, name="Delete"),
+    
+    path('Food/', views.Food, name="Food"),
+    path('Stationery/', views.Stationery, name="Stationery"),
+    path('Clothes/', views.Clothes, name="Clothes"),
+    path('Etc/', views.Etc, name="Etc"),
+    
+
+
 ]
 

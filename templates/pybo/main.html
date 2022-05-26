@@ -42,31 +42,22 @@
     </header>
 
         <div id="category">
-            <a href="/">
-                <div style="color: black;">Book</div>
-            </a>
-            <a href="food.html">
-                <div>Food</div>
-            </a>
-            <a href="stationery.html">
-                <div>Stationery</div>
-            </a>
-            <a href="clothes.html">
-                <div>Clothes</div>
-            </a>
-            <a href="etc.html">
-                <div>Etc</div>
-            </a>
+            <a href="{%url 'pybo:Food' %}" id="Food">Food</a>
+            <a href="{%url 'pybo:index' %}"><b>Book</b></a>
+            <a href="{%url 'pybo:Stationery' %}" id="Stationery">Stationery</a>
+            <a href="{%url 'pybo:Clothes' %}" id="Clothes">Clothes</a>
+            <a href="{%url 'pybo:Etc' %}" id="Etc">Etc</a>
         </div>
 
 <div id="contentbox">
     <div id="contenthead">
-        <form action="" method="get" style="width:100%;">
-            <div class="search-bar">
-          <i class="fas fa-search"></i>
-          <input class="search-bar__input" type="search" placeholder="search" />
+        <div style="width:100%">
+            <div class="search-bar" >
+                <i class="fas fa-search"></i>
+                <input class="search-bar__input" type="search" id="search_kw" value="{{ kw|default_if_none:'' }}" placeholder="search" />
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+             </div>
         </div>
-        </form>
 
         <select name="filter" id="filter">
             <option value="recent">recent</option>
@@ -81,15 +72,36 @@
 
             <article>
                 {% if Post.image %}
-                <a href="/pybo/{{ Post.id }}"><img src="{{Post.image.url}}" alt="book"></a>
+                <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" alt="book"></a>
                 {% else %}
-                <a href="/pybo/{{ Post.id }}"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
+                <a href="/pybo/{{ Post.id }}/"><img src="{% static 'images/default.jpg' %}" alt="book"></a>
                 {% endif %}
                 <div class = "contents_bottom">
     
                     <div class="book_name">
                         <div>{{Post.title}}</div>
-                        <div><img  onclick="change()" src="{% static 'images/heart.png' %}" alt="heart" id="{{Post.id}}"></div>
+
+
+                        {% if user in Post.like.all %}
+
+
+                        <form action = "{% url 'pybo:like' Post.id %}" method="post">
+                        {%csrf_token %}
+                        <button class="like" value="like">
+                            <img  src="{% static 'images/heartred.png' %}" alt="heart">
+                        </button>
+                        </form>
+                        {% else %}
+                        <form action = "{% url 'pybo:like' Post.id %}" method="post">
+                            {%csrf_token %}
+                        <button class="like" value="unlike">
+                            <img  src="{% static 'images/heart.png' %}" alt="blank_heart">
+                        </button>
+
+                        </form>
+                        {% endif %}
+
+
                     </div>
     
                     <div class="prog">
@@ -102,15 +114,6 @@
                     </div>
     
                 </div>
-                    <script>
-                    let flag = true;
-    
-                    function change(){
-                        document.getElementById("{{Post.id}}").src = flag ? "{% static 'images/heartred.png' %}" : "{% static 'images/heart.png' %}";
-                        flag = !flag;
-                    }
-                    </script>
-    
             </article>
             {% endfor %}
         {% else %}
@@ -175,7 +178,27 @@
 
 
 
-
+<form id="searchForm" method="get" action="{% url 'pybo:index' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+{% block script %}
+<script type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm').submit();
+    });
+});
+const btn_search = document.getElementById("btn_search");
+btn_search.addEventListener('click', function() {
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+});
+</script>
+{% endblock %}
 
 
 

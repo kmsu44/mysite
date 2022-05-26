@@ -25,7 +25,7 @@
         <img src="{% static 'images/user.png' %}" alt="" id="userImg">
         <ul>
             <li><a href="/pybo/" id="pagename">Home</a></li>
-            <li><a href="joined.html">Joined Group</a></li>
+            <li><a href="{%url 'pybo:joined' %}" id="joined">Joined Group</a></li>
             <li><a href="created.html"><b>Created Group</b></a></li>
             <li><a href="editInfo.html">Edit Information</a></li>
             {% if user.is_authenticated %}
@@ -46,9 +46,9 @@
                         {% if Post.user == user %}
                         <article class="book">
                             {% if Post.image %}
-                            <a href=""><img src="{{Post.image.url}}" class="bookImage" alt="book"></a>
+                            <a href="/pybo/{{ Post.id }}/"><img src="{{Post.image.url}}" class="bookImage" alt="book"></a>
                             {% else %}
-                            <a href=""><img src="{% static 'images/default.jpg' %}" class="bookImage" alt="book"></a>
+                            <a href="/pybo/{{ Pos.id }}/"><img src="{% static 'images/default.jpg' %}" class="bookImage" alt="book"></a>
                             {% endif %}
                             <div class = "contents_bottom">
                                 <div class="bookName">
@@ -61,7 +61,22 @@
                                     <div class="bookPersonnel"><p style="margin: 0;">목표 인원: {{Post.recruit_num}} / 담은 인원 : {{Post.participants}} </p></div>
                                     <span style="color:balck"> <del style="color:rgb(180, 179, 179); font-size: 13px;">{{Post.price}}</del>{{Post.dicount_price}}</span>
                                 </div>
-
+                                <div id = control_btn_box>
+                                    <div>
+                                        <form action = "" method="post">
+                                            {%csrf_token %}
+                                            <button class="control_btn" value="modify">MODIFY</button>
+                                        </form>
+                                    </div>
+                                    <div>
+                                        <form action = "{% url 'pybo:Delete' Post.id %}" method="post">
+                                            {%csrf_token %}
+                                            <button class="control_btn" value="delete">DELETE</button>
+                                        </form>
+                                    </div>
+                                    
+                                    
+                                </div>
                             </div>
 
                         </article>

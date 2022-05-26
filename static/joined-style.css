@@ -4,7 +4,7 @@
 #box{
     background-color: #f3eded;
     width: 90%;
-    height: 600px;
+    height: 100%;
     overflow: auto;
 }
 
@@ -76,7 +76,6 @@
     border-radius: 9px;
     padding: 70px;
     margin: 2px;
-    margin-right: 30px;
     display: grid;
     grid-template-columns: 200px 1fr;
     position: relative;
@@ -167,3 +166,10 @@ progress {
     left: 35%;
 }
 
+#control_btn_box{
+    display:flex;
+    justify-content: flex-end;
+}
+.control_btn{
+    margin :5px;
+}
