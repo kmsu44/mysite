@@ -151,6 +151,15 @@ label {
     height: 50%;
 }
 
+#previewbox{
+  display: flex;
+  margin-left: 37px;
+}
+#previewbox img{
+  width: 100px;
+  height: 100px;
+  
+}
 
 /*----------------------------------------------------*/
 

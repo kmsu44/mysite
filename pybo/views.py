@@ -1,5 +1,6 @@
+from asyncio.windows_events import NULL
 import re
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect,HttpResponseRedirect
 from django.utils import timezone
 from .models import Post
 from .models import Category
@@ -126,7 +127,6 @@ def Clothes(request):
     page_obj = paginator.get_page(page)
     context = {'Post_list': page_obj}
     return render(request, 'pybo/Clothes.html', context)
-# def join(request, post_id):
 
 def joined(request):
     if request.user.is_authenticated:
@@ -172,7 +172,8 @@ def like(request, Post_id):
         post.like.add(request.user)
         post.like_num +=1
         post.save()
-    return redirect('pybo:index')
+    return redirect("pybo:index")
+    
 
 def Delete(request, Post_id):
     post = get_object_or_404(Post, pk = Post_id)
@@ -197,4 +198,21 @@ def create(request):
         return redirect('pybo:index')
     else:
         return render(request, 'pybo/group.html')
+    
+def modify(request , Post_id):
+    post = Post.objects.get(id = Post_id)
+    if request.method == 'POST':
+        post.title = request.POST['title']
+        post.price = request.POST['price']
+        post.content = request.POST['content']
+        post.category=Category.objects.get(sort=request.POST.get('category'))
+        post.recruit_num = request.POST['recruit_num']
+        post.dicount_price = request.POST['dicount_price']
+        post.image = request.FILES.get('image')
+        post.save()
+        return redirect('pybo:cart')
+    else:
+        post = Post.objects.get(id=Post_id)
+        context = {'post': post}
+        return render(request, 'pybo/Product_modify.html',context)
     

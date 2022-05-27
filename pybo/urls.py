@@ -12,7 +12,7 @@ urlpatterns = [
     path('join/<int:Post_id>/', views.join, name="join"),
     path('like/<int:Post_id>/', views.like, name="like"),
     
-    
+    path('modify/<int:Post_id>/', views.modify, name="modify"),
     path('Delete/<int:Post_id>/', views.Delete, name="Delete"),
     
     path('Food/', views.Food, name="Food"),
