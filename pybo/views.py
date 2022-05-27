@@ -18,7 +18,7 @@ def index(request):
     page = request.GET.get('page', '1')
     Post_list = Post.objects.filter(category=2)
 
-    # 정렬
+    # 정렬 김민수
     sort = request.GET.get('sort', '')
     if sort == 'like':
         Post_list = Post_list.order_by('-like_num')
@@ -145,7 +145,7 @@ def detail(request, Post_id):
 
     
     
-
+# 참여하기 김민수
 def join(request, Post_id):
     if request.user.is_authenticated:
         post = get_object_or_404(Post, pk = Post_id)
@@ -159,7 +159,7 @@ def join(request, Post_id):
         post.participants +=1
         post.save()
     return redirect('pybo:index')
-
+# 좋아요 기능 김민수
 def like(request, Post_id):
     if request.user.is_authenticated:
         post = get_object_or_404(Post, pk = Post_id)
@@ -174,7 +174,7 @@ def like(request, Post_id):
         post.save()
     return redirect("pybo:index")
     
-
+# 게시글 삭제 김민수
 def Delete(request, Post_id):
     post = get_object_or_404(Post, pk = Post_id)
     post.delete()
@@ -198,7 +198,7 @@ def create(request):
         return redirect('pybo:index')
     else:
         return render(request, 'pybo/group.html')
-    
+# 게시글 수정 김민수
 def modify(request , Post_id):
     post = Post.objects.get(id = Post_id)
     if request.method == 'POST':
